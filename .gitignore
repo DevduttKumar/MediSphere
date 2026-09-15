@@ -1,0 +1,34 @@
+# Environment & Virtualenv
+backend/venv/
+backend/.venv/
+env/
+venv/
+ENV/
+
+# Python cache & artifacts
+backend/__pycache__/
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+
+# Sensitive database configuration
+backend/config.ini
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+*.local
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# System & IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

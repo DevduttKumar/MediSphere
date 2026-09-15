@@ -1,0 +1,60 @@
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+:root {
+  --bg: #ffffff;
+  --text: #1a1a1a;
+  --card-bg: #f8fbff;
+  --card-shadow: rgba(0, 0, 0, 0.06);
+  --primary: #007bff;
+  --primary-hover: #0056b3;
+  --border: #e0e0e0;
+  --footer-bg: #0c4a8a;
+  --nav-bg: rgba(255, 255, 255, 0.95);
+}
+
+.dark {
+  --bg: #121212;
+  --text: #e1e1e1;
+  --card-bg: #1e1e1e;
+  --card-shadow: rgba(0, 0, 0, 0.5);
+  --primary: #4dabf7;
+  --primary-hover: #339af0;
+  --border: #333333;
+  --footer-bg: #181818;
+  --nav-bg: rgba(18, 18, 18, 0.95);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button {
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, var(--primary), #00c6ff);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
