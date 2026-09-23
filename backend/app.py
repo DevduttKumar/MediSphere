@@ -6,6 +6,21 @@ from db import get_db_connection
 app = Flask(__name__)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({
+        "status": "online",
+        "service": "MediSphere Backend API",
+        "frontend_url": "http://localhost:5173",
+        "api_endpoints": [
+            "/api/hospitals",
+            "/api/pharmacy",
+            "/api/appointments",
+            "/api/auth/signup",
+            "/api/auth/login"
+        ]
+    })
+
 @app.route('/api/hospitals', methods=['GET'])
 def get_hospitals():
     search = request.args.get('search', '').strip()
@@ -30,6 +45,38 @@ def get_hospitals():
     hospitals = [dict(zip(cols, r)) for r in cursor.fetchall()]
     conn.close()
     return jsonify(hospitals)
+
+@app.route('/api/pharmacy', methods=['GET'])
+def get_pharmacy():
+    search = request.args.get('search', '').strip()
+    category = request.args.get('category', '').strip()
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({"error": "Database connection error"}), 500
+
+    cursor = conn.cursor()
+    query = "SELECT medicine_id, medicine_name, category, dosage, price, mfg, in_stock, description FROM MEDICINE WHERE 1=1"
+    params = []
+
+    if search:
+        query += " AND (LOWER(medicine_name) LIKE ? OR LOWER(category) LIKE ? OR LOWER(mfg) LIKE ?)"
+        term = f"%{search.lower()}%"
+        params.extend([term, term, term])
+
+    if category and category.lower() != "all":
+        query += " AND LOWER(category) LIKE ?"
+        params.append(f"%{category.lower()}%")
+
+    cursor.execute(query, params)
+    cols = [c[0] for c in cursor.description]
+    medicines = []
+    for r in cursor.fetchall():
+        row_dict = dict(zip(cols, r))
+        row_dict['price'] = float(row_dict['price'])
+        row_dict['in_stock'] = bool(row_dict['in_stock'])
+        medicines.append(row_dict)
+    conn.close()
+    return jsonify(medicines)
 
 @app.route('/api/appointments', methods=['POST'])
 def book_appointment():

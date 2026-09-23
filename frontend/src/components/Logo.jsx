@@ -1,7 +1,11 @@
+// ==========================================
+// MediSphere Logo Component
+// SVG brand icon with custom orbital gradients
+// ==========================================
 const Logo = ({ size = "36px", showText = true }) => {
   return (
-    <div style={{ display: "inline-flex", alignItems: "center", gap: "0.65rem", cursor: "pointer" }}>
-      {/* MediSphere 3D Orbital Healthcare Icon */}
+    <div style={{ display: "inline-flex", alignItems: "center", gap: "0.7rem", cursor: "pointer" }}>
+      {/* 3D Orbital Healthcare Icon */}
       <svg
         width={size}
         height={size}
@@ -36,7 +40,7 @@ const Logo = ({ size = "36px", showText = true }) => {
         {/* Central Luminous Sphere */}
         <circle cx="24" cy="24" r="16" fill="url(#msSphereGrad)" />
 
-        {/* Medical Cross (White with subtle rounding) */}
+        {/* Medical Cross */}
         <path
           d="M 21.5 15 H 26.5 V 21.5 H 33 V 26.5 H 26.5 V 33 H 21.5 V 26.5 H 15 V 21.5 H 21.5 Z"
           fill="#ffffff"
@@ -66,14 +70,16 @@ const Logo = ({ size = "36px", showText = true }) => {
 
       {/* Brand Typography */}
       {showText && (
-        <span style={{
-          fontSize: "1.35rem",
-          fontWeight: "800",
-          letterSpacing: "-0.5px",
-          color: "var(--primary)",
-          display: "flex",
-          alignItems: "center"
-        }}>
+        <span
+          style={{
+            fontSize: "1.35rem",
+            fontWeight: "800",
+            letterSpacing: "-0.5px",
+            color: "var(--primary)",
+            display: "flex",
+            alignItems: "center"
+          }}
+        >
           Medi<span style={{ color: "var(--text)", fontWeight: "600" }}>Sphere</span>
         </span>
       )}

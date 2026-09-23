@@ -10,8 +10,9 @@ import Facilities from "./components/Facilities";
 import Testimonials from "./components/Testimonials";
 import Footer from "./components/Footer";
 import AuthModal from "./components/AuthModal";
-import AppointmentPage from "./pages/AppointmentPage";
-import HospitalPage from "./pages/HospitalPage";
+import AppointmentPage from "./components/AppointmentPage";
+import HospitalPage from "./components/HospitalPage";
+import PharmacyPage from "./components/PharmacyPage";
 
 const HomePage = () => (
   <>
@@ -38,6 +39,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/hospital" element={<HospitalPage />} />
+          <Route path="/pharmacy" element={<PharmacyPage />} />
           <Route path="/appointment" element={<AppointmentPage />} />
         </Routes>
       </main>

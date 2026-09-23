@@ -1,13 +1,18 @@
 import { useState, useContext } from "react";
-import { AuthContext } from "../context/AuthContext";
+import { AuthContext } from "./AuthContext";
 
-const AuthModal = ({ type, onClose }) => {
+// ==========================================
+// Authentication Modal Component
+// Supports both Login & Sign Up workflows
+// ==========================================
+const AuthModal = ({ type = "login", onClose }) => {
   const { loginUser } = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(type === "login");
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Submit credentials to backend API
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -33,57 +38,169 @@ const AuthModal = ({ type, onClose }) => {
   };
 
   return (
-    <div style={{
-      position: "fixed", inset: 0, background: "rgba(0,0,0,0.5)",
-      display: "flex", justifyContent: "center", alignItems: "center", zIndex: 1000
-    }}>
-      <div style={{
-        background: "var(--bg)", padding: "2rem", borderRadius: "12px",
-        width: "90%", maxWidth: "400px", border: "1px solid var(--border)"
-      }}>
-        <h2>{isLogin ? "Welcome Back" : "Create Account"}</h2>
-        {error && <p style={{ color: "red", marginTop: "0.5rem" }}>{error}</p>}
+    <div
+      style={{
+        position: "fixed",
+        inset: 0,
+        background: "rgba(0, 0, 0, 0.55)",
+        backdropFilter: "blur(4px)",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 1000,
+        padding: "1rem"
+      }}
+    >
+      <div
+        style={{
+          background: "var(--card-bg)",
+          color: "var(--text)",
+          padding: "2.5rem 2rem",
+          borderRadius: "16px",
+          width: "100%",
+          maxWidth: "420px",
+          border: "1px solid var(--border)",
+          boxShadow: "0 12px 36px var(--card-shadow)"
+        }}
+      >
+        {/* Title */}
+        <h2 style={{ fontSize: "1.75rem", color: "var(--primary)", textAlign: "center", marginBottom: "0.5rem" }}>
+          {isLogin ? "Welcome Back" : "Create Account"}
+        </h2>
+        <p style={{ textAlign: "center", fontSize: "0.9rem", opacity: 0.8, marginBottom: "1.5rem" }}>
+          {isLogin ? "Sign in to access your appointments and care records" : "Register to start your personalized health journey"}
+        </p>
 
-        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1rem" }}>
+        {/* Error Alert */}
+        {error && (
+          <div
+            style={{
+              padding: "0.75rem",
+              borderRadius: "8px",
+              background: "rgba(220, 53, 69, 0.12)",
+              color: "#dc3545",
+              fontSize: "0.9rem",
+              textAlign: "center",
+              marginBottom: "1rem",
+              border: "1px solid #dc3545"
+            }}
+          >
+            {error}
+          </div>
+        )}
+
+        {/* Form Fields */}
+        <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           {!isLogin && (
-            <input
-              type="text"
-              placeholder="Full Name"
-              required
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              style={{ padding: "0.75rem", borderRadius: "6px", border: "1px solid var(--border)" }}
-            />
+            <div>
+              <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.3rem" }}>
+                Full Name
+              </label>
+              <input
+                type="text"
+                placeholder="John Doe"
+                required
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                style={{
+                  width: "100%",
+                  padding: "0.75rem",
+                  borderRadius: "8px",
+                  border: "1px solid var(--border)",
+                  background: "var(--bg)",
+                  color: "var(--text)",
+                  outline: "none"
+                }}
+              />
+            </div>
           )}
-          <input
-            type="email"
-            placeholder="Email Address"
-            required
-            value={formData.email}
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            style={{ padding: "0.75rem", borderRadius: "6px", border: "1px solid var(--border)" }}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            required
-            value={formData.password}
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-            style={{ padding: "0.75rem", borderRadius: "6px", border: "1px solid var(--border)" }}
-          />
-          <button type="submit" className="primary-btn" disabled={loading}>
-            {loading ? "Processing..." : isLogin ? "Login" : "Sign Up"}
+
+          <div>
+            <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.3rem" }}>
+              Email Address
+            </label>
+            <input
+              type="email"
+              placeholder="name@example.com"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              style={{
+                width: "100%",
+                padding: "0.75rem",
+                borderRadius: "8px",
+                border: "1px solid var(--border)",
+                background: "var(--bg)",
+                color: "var(--text)",
+                outline: "none"
+              }}
+            />
+          </div>
+
+          <div>
+            <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.3rem" }}>
+              Password
+            </label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              required
+              value={formData.password}
+              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              style={{
+                width: "100%",
+                padding: "0.75rem",
+                borderRadius: "8px",
+                border: "1px solid var(--border)",
+                background: "var(--bg)",
+                color: "var(--text)",
+                outline: "none"
+              }}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="primary-btn"
+            disabled={loading}
+            style={{
+              padding: "0.85rem",
+              borderRadius: "8px",
+              marginTop: "0.5rem",
+              fontWeight: 600,
+              fontSize: "1rem"
+            }}
+          >
+            {loading ? "Processing..." : isLogin ? "Sign In" : "Create Account"}
           </button>
         </form>
 
-        <p style={{ marginTop: "1rem", textAlign: "center", fontSize: "0.9rem" }}>
-          {isLogin ? "Need an account? " : "Already have an account? "}
-          <span onClick={() => setIsLogin(!isLogin)} style={{ color: "var(--primary)", cursor: "pointer", fontWeight: 600 }}>
-            {isLogin ? "Sign Up" : "Login"}
+        {/* Toggle Login / Sign Up */}
+        <p style={{ marginTop: "1.2rem", textAlign: "center", fontSize: "0.9rem" }}>
+          {isLogin ? "Don't have an account? " : "Already have an account? "}
+          <span
+            onClick={() => setIsLogin(!isLogin)}
+            style={{ color: "var(--primary)", cursor: "pointer", fontWeight: 700 }}
+          >
+            {isLogin ? "Sign Up" : "Sign In"}
           </span>
         </p>
-        <button onClick={onClose} style={{ marginTop: "0.5rem", width: "100%", background: "none", border: "none", color: "var(--text)" }}>
-          Close
+
+        {/* Close Modal Button */}
+        <button
+          onClick={onClose}
+          style={{
+            marginTop: "0.8rem",
+            width: "100%",
+            background: "transparent",
+            border: "none",
+            color: "var(--text)",
+            opacity: 0.7,
+            padding: "0.4rem",
+            cursor: "pointer"
+          }}
+        >
+          Cancel
         </button>
       </div>
     </div>
